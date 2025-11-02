@@ -3,6 +3,7 @@ package com.sreenu.blog_app.blog_application_project.controllers;
 import com.sreenu.blog_app.blog_application_project.payloads.ApiResponse;
 import com.sreenu.blog_app.blog_application_project.payloads.UserDto;
 import com.sreenu.blog_app.blog_application_project.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class UserController {
     // POST - Create user
 
     @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto)
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto)
     {
         UserDto createUserDto = userService.createUser(userDto);
         return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
@@ -30,7 +31,7 @@ public class UserController {
     // PUT  - Update user
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Integer userId) {
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable Integer userId) {
        UserDto updatedUser =  userService.updateUser(userDto,userId);
        return ResponseEntity.ok(updatedUser);
     }
@@ -56,7 +57,7 @@ public class UserController {
     // GET - get single user
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getAllUsers(@PathVariable Integer userId) {
+    public ResponseEntity<UserDto> getUser(@PathVariable Integer userId) {
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 

@@ -1,6 +1,7 @@
 package com.sreenu.blog_app.blog_application_project.payloads;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,9 +12,19 @@ import lombok.Setter;
 public class UserDto {
 
     private int id;
+
+    @NotEmpty
+    @Size(min = 4, message = "Username must be 4 min of characters")
     private String name;
+
+    @Email(message = "Email address is not valid!")
     private String email;
+
+    @NotEmpty
+    @Size(min = 3, max = 10, message = "Password must be min 3 and max 10")
     private String password;
+
+    @NotEmpty
     private String about;
 
     public int getId() {
