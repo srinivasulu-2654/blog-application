@@ -1,10 +1,14 @@
 package com.sreenu.blog_app.blog_application_project.payloads;
 
+import com.sreenu.blog_app.blog_application_project.entities.Role;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -26,6 +30,8 @@ public class UserDto {
 
     @NotEmpty
     private String about;
+
+    private Set<RoleDto> roles = new HashSet<>();
 
     public int getId() {
         return id;
@@ -65,5 +71,13 @@ public class UserDto {
 
     public void setAbout(String about) {
         this.about = about;
+    }
+
+    public Set<RoleDto> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RoleDto> roles) {
+        this.roles = roles;
     }
 }

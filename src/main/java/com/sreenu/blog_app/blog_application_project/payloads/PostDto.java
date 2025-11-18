@@ -2,9 +2,12 @@ package com.sreenu.blog_app.blog_application_project.payloads;
 
 
 
+import com.sreenu.blog_app.blog_application_project.entities.Comments;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 public class PostDto {
@@ -22,6 +25,10 @@ public class PostDto {
     private CategoryDto category;
 
     private UserDto user;
+
+    private Set<CommentDto> comments = new HashSet<>();
+
+//  the above line  if we take here Comments class then it will repeteadly recursive becuase here in this we took post but in CommentDto we didn't took post so it wont be recursive
 
     public Integer getPostId() {
         return postId;
@@ -77,5 +84,13 @@ public class PostDto {
 
     public void setUser(UserDto user) {
         this.user = user;
+    }
+
+    public Set<CommentDto> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<CommentDto> comments) {
+        this.comments = comments;
     }
 }

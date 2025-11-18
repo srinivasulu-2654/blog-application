@@ -3,7 +3,10 @@ package com.sreenu.blog_app.blog_application_project.entities;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
+import javax.xml.stream.events.Comment;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -32,6 +35,9 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user; // which user put this post
+
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Comments> comments = new HashSet<>();
 
     public Integer getPostId() {
         return postId;
@@ -89,4 +95,11 @@ public class Post {
         this.user = user;
     }
 
+    public Set<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comments> comments) {
+        this.comments = comments;
+    }
 }

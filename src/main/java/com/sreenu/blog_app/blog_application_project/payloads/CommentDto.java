@@ -1,0 +1,26 @@
+package com.sreenu.blog_app.blog_application_project.payloads;
+
+
+
+public class CommentDto {
+
+    private int id;
+
+    private String content;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+}

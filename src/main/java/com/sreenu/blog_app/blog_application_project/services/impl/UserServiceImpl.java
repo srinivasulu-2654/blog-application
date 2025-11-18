@@ -1,18 +1,20 @@
 package com.sreenu.blog_app.blog_application_project.services.impl;
 
+import com.sreenu.blog_app.blog_application_project.config.AppConstants;
+import com.sreenu.blog_app.blog_application_project.entities.Role;
 import com.sreenu.blog_app.blog_application_project.entities.User;
 import com.sreenu.blog_app.blog_application_project.exceptions.ResourceNotFoundException;
 import com.sreenu.blog_app.blog_application_project.payloads.UserDto;
+import com.sreenu.blog_app.blog_application_project.repositories.RoleRepo;
 import com.sreenu.blog_app.blog_application_project.repositories.UserRepo;
 import com.sreenu.blog_app.blog_application_project.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,6 +24,30 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepo roleRepo;
+
+    @Override
+    public UserDto registerNewUser(UserDto userDto) {
+        User user1 = modelMapper.map(userDto,User.class);
+
+        //encoded the password
+        user1.setPassword(passwordEncoder.encode(user1.getPassword()));
+
+        //roles
+
+      Role role =  roleRepo.findById(AppConstants.NORMAL_USER).get();
+
+      user1.getRoles().add(role);
+
+      User newUser = userRepo.save(user1);
+
+     return modelMapper.map(newUser,UserDto.class);
+    }
 
     @Override
     public UserDto createUser(UserDto userDto) {
